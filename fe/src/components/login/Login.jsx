@@ -3,9 +3,19 @@ import { useEffect, useState } from 'react'
 import InputField from '../input/InputField'
 import { useForm } from 'react-hook-form'
 import Button from '../commons/Button'
+import InputRadio from '../input/InputRadio'
+import { apiRegister, apiSignIn } from '@/apis/auth'
+import Swal from 'sweetalert2'
+import { toast } from 'react-toastify'
+import withRouter from '@/hocs/withRouter'
+import { useModalStore } from '@/store/useModalStore'
+import { useUserStore } from '@/store/useUserStore'
 
-function Login() {
+function Login({ navigate }) {
   const [variant, setVariant] = useState('login')
+  const { setModal } = useModalStore()
+  const [isLoading, setIsLoading] = useState(false)
+  const { setToken } = useUserStore()
   const {
     register,
     formState: { errors },
@@ -18,11 +28,41 @@ function Login() {
       phone: '',
       password: '',
       name: '',
+      role: '',
     })
   }, [variant, reset])
 
-  const onSubmit = (data) => {
-    console.log(data, 'form data')
+  const onSubmit = async (data) => {
+    if (variant === 'register') {
+      setIsLoading(true)
+      const response = await apiRegister(data)
+      setIsLoading(false)
+      if (response.success) {
+        Swal.fire({
+          title: 'Registration Successful',
+          text: 'You can now log in with your account.',
+          icon: 'success',
+          confirmButtonText: 'Go to Login',
+        }).then(() => {
+          reset()
+          setVariant('login')
+        })
+      } else {
+        toast.error(response.message || 'Registration failed. Please try again.')
+      }
+    }
+    if (variant === 'login') {
+      const { name, role, ...payload } = data
+      const response = await apiSignIn(payload)
+      if (response.success) {
+        setToken(response.accessToken)
+        toast.success('Login successful!')
+        setModal(false, null)
+        navigate('/')
+      } else {
+        toast.error(response.message || 'Login failed. Please try again')
+      }
+    }
   }
   return (
     <div
@@ -63,8 +103,8 @@ function Login() {
           validate={{
             required: 'Phone number is required',
             pattern: {
-              value: /^\d{10}$/,
-              message: 'Phone number must be 10 digits',
+              value: /(0[3|5|7|8|9])+([0-9]{8})\b/,
+              message: 'Phone number is not valid',
             },
           }}
           errors={errors}
@@ -86,23 +126,40 @@ function Login() {
           errors={errors}
         />
         {variant !== 'login' && (
-          <InputField
-            register={register}
-            id="name"
-            label="Full Name"
-            inputClassName="rounded-md"
-            placeholder="Enter your full name"
-            validate={{
-              required: 'Full name is required',
-              minLength: {
-                value: 2,
-                message: 'Full name must be at least 2 characters',
-              },
-            }}
-            errors={errors}
-          />
+          <>
+            <InputField
+              register={register}
+              id="name"
+              label="Full Name"
+              inputClassName="rounded-md"
+              placeholder="Enter your full name"
+              validate={{
+                required: 'Full name is required',
+                minLength: {
+                  value: 2,
+                  message: 'Full name must be at least 2 characters',
+                },
+              }}
+              errors={errors}
+            />
+
+            <InputRadio
+              register={register}
+              id="role"
+              label="Type Acount"
+              inputClassName="rounded-md"
+              validate={{
+                required: 'Role is required',
+              }}
+              options={[
+                { value: 'USER', label: 'User' },
+                { value: 'AGENT', label: 'Agent' },
+              ]}
+              errors={errors}
+            />
+          </>
         )}
-        <Button type="submit" className="w-full py-2 mt-6 mb-1">
+        <Button type="submit" className="w-full py-2 mt-6 mb-1" isLoading={isLoading}>
           {variant === 'login' ? 'Sign In' : 'Sign Up'}
         </Button>
       </form>
@@ -112,5 +169,5 @@ function Login() {
     </div>
   )
 }
-
-export default Login
+const LoginWithRouter = withRouter(Login)
+export default LoginWithRouter

@@ -10,9 +10,19 @@ import {
 import { path } from './utils/path'
 import { Modal } from './components'
 import { useModalStore } from './store/useModalStore'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { useUserStore } from './store/useUserStore'
+import { useEffect } from 'react'
 
 function App() {
   const { isShowModal } = useModalStore()
+  const { getCurrent, token } = useUserStore()
+
+  useEffect(() => {
+    getCurrent()
+  }, [token])
+
   return (
     <>
       {isShowModal && <Modal />}
@@ -25,6 +35,18 @@ function App() {
           <Route path={path.SEARCH} element={<Search />} />
         </Route>
       </Routes>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </>
   )
 }
