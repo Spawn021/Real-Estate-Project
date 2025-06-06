@@ -1,9 +1,11 @@
 const express = require('express')
 require('dotenv').config()
+
 const cors = require('cors')
 const dbconnect = require('./config/dbconnect')
 const app = express()
 const port = process.env.PORT || 8080
+require('./config/redis.config')
 
 const initRoutes = require('./routes')
 const { errorHandler, badRequest } = require('./middlewares/errorHandler')
