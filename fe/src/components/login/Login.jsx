@@ -15,7 +15,7 @@ function Login({ navigate }) {
   const [variant, setVariant] = useState('login')
   const { setModal } = useModalStore()
   const [isLoading, setIsLoading] = useState(false)
-  const { setToken } = useUserStore()
+  const { setToken, roles } = useUserStore()
   const {
     register,
     formState: { errors },
@@ -28,7 +28,7 @@ function Login({ navigate }) {
       phone: '',
       password: '',
       name: '',
-      role: '',
+      roleCode: '',
     })
   }, [variant, reset])
 
@@ -52,7 +52,7 @@ function Login({ navigate }) {
       }
     }
     if (variant === 'login') {
-      const { name, role, ...payload } = data
+      const { name, roleCode, ...payload } = data
       const response = await apiSignIn(payload)
       if (response.success) {
         setToken(response.accessToken)
@@ -145,16 +145,18 @@ function Login({ navigate }) {
 
             <InputRadio
               register={register}
-              id="role"
+              id="roleCode"
               label="Type Acount"
               inputClassName="rounded-md"
               validate={{
                 required: 'Role is required',
               }}
-              options={[
-                { value: 'USER', label: 'User' },
-                { value: 'AGENT', label: 'Agent' },
-              ]}
+              options={roles
+                .filter((role) => role.code !== 'ROLE1')
+                .map((role) => ({
+                  value: role.code,
+                  label: role.value,
+                }))}
               errors={errors}
             />
           </>

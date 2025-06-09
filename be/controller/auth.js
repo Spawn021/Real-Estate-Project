@@ -3,15 +3,26 @@ const db = require('../models')
 const { throwErrorWithStatus } = require('../middlewares/errorHandler')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const user = require('../models/user')
 
 const signup = asyncHandler(async (req, res) => {
-  const { phone } = req.body
+  const { phone, password, name } = req.body
 
   const response = await db.User.findOrCreate({
     where: { phone },
-    defaults: req.body,
+    defaults: { phone, password, name },
   })
-
+  const userId = response[0].id
+  if (userId) {
+    const roleCode = ['ROLE7']
+    if (req.body.roleCode) roleCode.push(req.body.roleCode)
+    const roleCodeBulk = roleCode.map((code) => ({
+      uid: userId,
+      roleCode: code,
+    }))
+    const updateRole = await db.UserRole.bulkCreate(roleCodeBulk)
+    if (!updateRole) await db.User.destroy({ where: { id: userId } })
+  }
   return res.status(201).json({
     success: response[1],
     message: response[1] ? 'User registered successfully' : 'Phone Number already exists',

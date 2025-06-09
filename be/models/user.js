@@ -9,7 +9,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      User.hasMany(models.UserRole, {
+        foreignKey: 'uid',
+        as: 'userRoles',
+      })
     }
   }
   User.init(
@@ -25,7 +28,6 @@ module.exports = (sequelize, DataTypes) => {
           this.setDataValue('password', bcrypt.hashSync(value, salt))
         },
       },
-      roleCode: DataTypes.STRING,
       avatar: DataTypes.STRING,
     },
     {

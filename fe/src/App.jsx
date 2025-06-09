@@ -14,13 +14,20 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { useUserStore } from './store/useUserStore'
 import { useEffect } from 'react'
+import {
+  AdminLayout,
+  CreatePropertyType,
+  Dashboard,
+  ManagePropertyType,
+} from './pages/admin'
 
 function App() {
   const { isShowModal } = useModalStore()
-  const { getCurrent, token } = useUserStore()
+  const { getCurrent, token, getRoles } = useUserStore()
 
   useEffect(() => {
     getCurrent()
+    getRoles()
   }, [token])
 
   return (
@@ -33,6 +40,12 @@ function App() {
           <Route path={path.OUR_AGENTS} element={<OurAgents />} />
           <Route path={path.PROPERTIES} element={<Properties />} />
           <Route path={path.SEARCH} element={<Search />} />
+        </Route>
+
+        <Route path={path.ADMIN_LAYOUT} element={<AdminLayout />}>
+          <Route path={path.DASHBOARD} element={<Dashboard />} />
+          <Route path={path.CREATE_PROPERTY_TYPE} element={<CreatePropertyType />} />
+          <Route path={path.MANAGE_PROPERTY_TYPE} element={<ManagePropertyType />} />
         </Route>
       </Routes>
       <ToastContainer

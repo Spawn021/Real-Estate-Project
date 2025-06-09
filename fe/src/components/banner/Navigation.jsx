@@ -9,12 +9,12 @@ import { useModalStore } from '@/store/useModalStore'
 import Login from '../login/Login'
 
 const Navigation = ({ location }) => {
-  const { token } = useUserStore()
+  const { current } = useUserStore()
   const { setModal } = useModalStore()
   return (
     <div className="h-[85px] w-full bg-transparent z-50 fixed top-[85px] px-[100px] py-[26px] flex items-center justify-between ">
       <Link to="/">
-        <img src="src/assets/logo.png" alt="Logo" className="w-[120px] object-content" />
+        <img src="/logo.png" alt="Logo" className="w-[120px] object-content" />
       </Link>
       <div
         className={clsx(
@@ -41,7 +41,7 @@ const Navigation = ({ location }) => {
             {nav.text}
           </NavLink>
         ))}
-        {token ? (
+        {current ? (
           <Button
             className={twMerge(
               clsx(location.pathname == '/' && 'bg-transparent border border-main-100'),

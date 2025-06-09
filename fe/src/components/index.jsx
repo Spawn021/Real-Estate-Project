@@ -7,4 +7,6 @@ export { default as Modal } from './commons/Modal'
 export { default as InputField } from './input/InputField'
 export { default as InputRadio } from './input/InputRadio'
 
+export { default as AdminSidebar } from './sidebar/AdminSidebar'
+
 export { default as Login } from './login/Login'
