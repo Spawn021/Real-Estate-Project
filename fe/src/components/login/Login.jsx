@@ -10,6 +10,8 @@ import { toast } from 'react-toastify'
 import withRouter from '@/hocs/withRouter'
 import { useModalStore } from '@/store/useModalStore'
 import { useUserStore } from '@/store/useUserStore'
+import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
+import auth from '@/utils/firebaseConfig'
 
 function Login({ navigate }) {
   const [variant, setVariant] = useState('login')
@@ -32,8 +34,56 @@ function Login({ navigate }) {
     })
   }, [variant, reset])
 
+  const handleVerifyCaptcha = () => {
+    if (window.recaptchaVerifier) {
+      window.recaptchaVerifier.clear()
+    }
+    window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+      size: 'invisible',
+      callback: (response) => {},
+      'expired-callback': (response) => {},
+    })
+  }
+  const handleSendOTP = (phone) => {
+    handleVerifyCaptcha()
+    const verifier = window.recaptchaVerifier
+    const formattedPhone = phone.startsWith('+84') ? phone : `+84${phone.slice(1)}`
+
+    signInWithPhoneNumber(auth, formattedPhone, verifier)
+      .then((confirmationResult) => {
+        window.confirmationResult = confirmationResult
+        Swal.fire({
+          title: 'OTP Sent',
+          text: 'Please enter the OTP sent to your phone number.',
+          icon: 'success',
+          confirmButtonText: 'OK',
+        }).then(() => {
+          const otp = prompt('Enter the OTP:')
+          if (otp) {
+            confirmationResult
+              .confirm(otp)
+              .then((result) => {
+                console.log('OTP verified successfully', result)
+                onSubmit(register.getValues())
+              })
+              .catch((error) => {
+                console.error('Error verifying OTP:', error)
+                toast.error('Invalid OTP. Please try again.')
+              })
+          }
+        })
+      })
+      .catch((error) => {
+        console.error('Error sending OTP:', error)
+        toast.error('Failed to send OTP. Please try again.')
+      })
+  }
+
   const onSubmit = async (data) => {
     if (variant === 'register') {
+      // if (data.roleCode !== 'ROLE7') {
+      //   handleSendOTP(data.phone)
+      // }
       setIsLoading(true)
       const response = await apiRegister(data)
       setIsLoading(false)
@@ -69,6 +119,7 @@ function Login({ navigate }) {
       onClick={(e) => e.stopPropagation()}
       className="bg-white rounded-md text-lg px-4 py-8 flex-col w-[500px] items-center justify-center flex gap-6"
     >
+      <div id="recaptcha-container" className="hidden"></div>
       <h1 className="text-3xl font-semibold">Welcome to REST06</h1>
       <div className="flex items-center gap-6 w-full justify-start border-b">
         <span

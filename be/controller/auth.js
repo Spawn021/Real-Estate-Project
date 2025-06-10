@@ -3,7 +3,6 @@ const db = require('../models')
 const { throwErrorWithStatus } = require('../middlewares/errorHandler')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const user = require('../models/user')
 
 const signup = asyncHandler(async (req, res) => {
   const { phone, password, name } = req.body
