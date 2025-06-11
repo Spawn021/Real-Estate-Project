@@ -7,7 +7,16 @@ export const path = {
   SEARCH: 'search',
 
   ADMIN_LAYOUT: 'admin',
-  DASHBOARD: 'dashboard',
+  ADMIN_DASHBOARD: 'dashboard',
   CREATE_PROPERTY_TYPE: 'create-property-type',
   MANAGE_PROPERTY_TYPE: 'manage-property-type',
+
+  USER_LAYOUT: 'user',
+  PERSONAL: 'personal',
+
+  AGENT_LAYOUT: 'agent',
+  AGENT_DASHBOARD: 'dashboard',
+
+  OWNER_LAYOUT: 'owner',
+  OWNER_DASHBOARD: 'dashboard',
 }

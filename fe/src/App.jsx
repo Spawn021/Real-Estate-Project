@@ -20,6 +20,7 @@ import {
   Dashboard,
   ManagePropertyType,
 } from './pages/admin'
+import { Personal, UserLayout } from './pages/user'
 
 function App() {
   const { isShowModal } = useModalStore()
@@ -43,9 +44,13 @@ function App() {
         </Route>
 
         <Route path={path.ADMIN_LAYOUT} element={<AdminLayout />}>
-          <Route path={path.DASHBOARD} element={<Dashboard />} />
+          <Route path={path.ADMIN_DASHBOARD} element={<Dashboard />} />
           <Route path={path.CREATE_PROPERTY_TYPE} element={<CreatePropertyType />} />
           <Route path={path.MANAGE_PROPERTY_TYPE} element={<ManagePropertyType />} />
+        </Route>
+
+        <Route path={path.USER_LAYOUT} element={<UserLayout />}>
+          <Route path={path.PERSONAL} element={<Personal />} />
         </Route>
       </Routes>
       <ToastContainer

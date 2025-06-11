@@ -64,3 +64,30 @@ export const adminSidebar = [
     ],
   },
 ]
+
+export const menuItems = [
+  {
+    id: 1,
+    name: 'Personal Information',
+    code: 'ROLE7',
+    path: `/${path.USER_LAYOUT}/${path.PERSONAL}`,
+  },
+  {
+    id: 2,
+    name: 'Agent',
+    code: 'ROLE5',
+    path: `/${path.AGENT_LAYOUT}/${path.AGENT_LAYOUT}`,
+  },
+  {
+    id: 3,
+    name: 'Owner',
+    code: 'ROLE3',
+    path: `/${path.OWNER_LAYOUT}/${path.OWNER_DASHBOARD}`,
+  },
+  {
+    id: 3,
+    name: 'Admin',
+    code: 'ROLE1',
+    path: `/${path.ADMIN_LAYOUT}/${path.ADMIN_DASHBOARD}`,
+  },
+]

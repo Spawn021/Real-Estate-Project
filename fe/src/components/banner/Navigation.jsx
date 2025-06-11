@@ -12,7 +12,7 @@ const Navigation = ({ location }) => {
   const { current } = useUserStore()
   const { setModal } = useModalStore()
   return (
-    <div className="h-[85px] w-full bg-transparent z-50 fixed top-[85px] px-[100px] py-[26px] flex items-center justify-between ">
+    <div className="h-[85px] w-full bg-transparent z-10 fixed top-[85px] px-[100px] py-[26px] flex items-center justify-between ">
       <Link to="/">
         <img src="/logo.png" alt="Logo" className="w-[120px] object-content" />
       </Link>

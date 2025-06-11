@@ -26,6 +26,9 @@ export const useUserStore = create()(
           set({ roles: [] })
         }
       },
+      logout: () => {
+        set({ token: null, current: null, roles: [] })
+      },
     }),
     {
       name: 'user-storage',

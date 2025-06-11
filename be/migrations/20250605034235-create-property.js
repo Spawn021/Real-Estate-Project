@@ -64,10 +64,10 @@ module.exports = {
           key: 'id',
         },
       },
-      bedroom: {
+      bedRoom: {
         type: Sequelize.INTEGER,
       },
-      bathroom: {
+      bathRoom: {
         type: Sequelize.INTEGER,
       },
       propertySize: {
