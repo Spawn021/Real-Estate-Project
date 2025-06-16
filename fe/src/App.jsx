@@ -1,12 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
-import {
-  AboutUs,
-  Home,
-  OurAgents,
-  Properties,
-  PublicLayout,
-  Search,
-} from './pages/public'
+import { AboutUs, Home, OurAgents, Properties, PublicLayout } from './pages/public'
 import { path } from './utils/path'
 import { Modal } from './components'
 import { useModalStore } from './store/useModalStore'
@@ -21,14 +14,16 @@ import {
   ManagePropertyType,
 } from './pages/admin'
 import { Personal, UserLayout } from './pages/user'
+import { usePropertyStore } from './store/usePropertyStore'
 
 function App() {
   const { isShowModal } = useModalStore()
   const { getCurrent, token, getRoles } = useUserStore()
-
+  const { getPropertyTypes } = usePropertyStore()
   useEffect(() => {
     getCurrent()
     getRoles()
+    getPropertyTypes({ fields: 'id,name,image' })
   }, [token])
 
   return (
@@ -40,7 +35,6 @@ function App() {
           <Route path={path.ABOUT_US} element={<AboutUs />} />
           <Route path={path.OUR_AGENTS} element={<OurAgents />} />
           <Route path={path.PROPERTIES} element={<Properties />} />
-          <Route path={path.SEARCH} element={<Search />} />
         </Route>
 
         <Route path={path.ADMIN_LAYOUT} element={<AdminLayout />}>

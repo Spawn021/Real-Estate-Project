@@ -2,7 +2,14 @@ import clsx from 'clsx'
 import { twMerge } from 'tailwind-merge'
 import { CgSpinner } from 'react-icons/cg'
 
-const Button = ({ children, className, onClick, type = 'button', isLoading = false }) => {
+const Button = ({
+  children,
+  className,
+  onClick,
+  type = 'button',
+  isLoading = false,
+  disabled,
+}) => {
   return (
     <button
       type={type}
@@ -11,10 +18,10 @@ const Button = ({ children, className, onClick, type = 'button', isLoading = fal
         clsx(
           'py-3 px-4 text-white bg-main-700 rounded-md flex justify-center items-center gap-2',
           className,
-          isLoading && 'opacity-50 ',
+          (isLoading || disabled) && 'opacity-50 cursor-not-allowed',
         ),
       )}
-      disabled={isLoading}
+      disabled={isLoading || disabled}
     >
       {isLoading && <CgSpinner className="animate-spin" />}
       {children}

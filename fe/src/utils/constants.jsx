@@ -12,8 +12,8 @@ export const navigations = [
   },
   {
     id: 2,
-    path: `/${path.ABOUT_US}`,
-    text: 'ABOUT US',
+    path: `/${path.PROPERTIES}`,
+    text: 'PROPERTIES',
   },
   {
     id: 3,
@@ -22,13 +22,8 @@ export const navigations = [
   },
   {
     id: 4,
-    path: `/${path.PROPERTIES}`,
-    text: 'PROPERTIES',
-  },
-  {
-    id: 5,
-    path: `/${path.SEARCH}`,
-    text: 'SEARCH',
+    path: `/${path.ABOUT_US}`,
+    text: 'ABOUT US',
   },
 ]
 
@@ -85,7 +80,7 @@ export const menuItems = [
     path: `/${path.OWNER_LAYOUT}/${path.OWNER_DASHBOARD}`,
   },
   {
-    id: 3,
+    id: 4,
     name: 'Admin',
     code: 'ROLE1',
     path: `/${path.ADMIN_LAYOUT}/${path.ADMIN_DASHBOARD}`,

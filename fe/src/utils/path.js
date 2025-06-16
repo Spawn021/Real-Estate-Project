@@ -4,7 +4,6 @@ export const path = {
   ABOUT_US: 'about-us',
   OUR_AGENTS: 'our-agents',
   PROPERTIES: 'properties',
-  SEARCH: 'search',
 
   ADMIN_LAYOUT: 'admin',
   ADMIN_DASHBOARD: 'dashboard',

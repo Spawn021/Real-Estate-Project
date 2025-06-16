@@ -56,6 +56,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      address: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       postedBy: {
         type: Sequelize.UUID,
         allowNull: false,

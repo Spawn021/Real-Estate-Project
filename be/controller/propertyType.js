@@ -2,6 +2,7 @@ const asyncHandler = require('express-async-handler')
 const db = require('../models')
 const { throwErrorWithStatus } = require('../middlewares/errorHandler')
 const redis = require('../config/redis.config')
+const { generateKeyRedis } = require('../utils/helper')
 
 const createNewPropertyType = asyncHandler(async (req, res) => {
   const { name } = req.body
@@ -21,6 +22,7 @@ const createNewPropertyType = asyncHandler(async (req, res) => {
 
 const getPropertyTypes = asyncHandler(async (req, res) => {
   const { limit, page, fields, name, sort, ...query } = req.query
+
   const options = {}
   if (fields) {
     const attributes = fields.split(',')
@@ -32,7 +34,9 @@ const getPropertyTypes = asyncHandler(async (req, res) => {
   if (name) query.name = { [db.Sequelize.Op.iLike]: `%${name}%` }
 
   if (!limit) {
-    const cachedPropertyTypes = await redis.get('propertyTypes')
+    const filter = { where: query, ...options }
+    const key = generateKeyRedis(filter)
+    const cachedPropertyTypes = await redis.get(`propertyTypes:${key}`)
     if (cachedPropertyTypes) {
       const parsedPropertyTypes = JSON.parse(cachedPropertyTypes)
       return res.status(200).json({
@@ -44,11 +48,9 @@ const getPropertyTypes = asyncHandler(async (req, res) => {
         propertyTypes: parsedPropertyTypes,
       })
     }
-    const response = await db.PropertyType.findAll({
-      where: query,
-      ...options,
-    })
-    redis.set('propertyTypes', JSON.stringify(response))
+    const response = await db.PropertyType.findAll(filter)
+    redis.set(`propertyTypes:${key}`, JSON.stringify(response))
+    redis.expireAt(`propertyTypes:${key}`, parseInt(+new Date() / 1000) + 86400) // Cache for 1 hour
     return res.status(200).json({
       success: response.length > 0,
       message:
@@ -82,9 +84,11 @@ const getPropertyTypes = asyncHandler(async (req, res) => {
         ? 'Property Types fetched successfully'
         : 'No Property Types found',
     propertyTypes: response.rows,
-    totalCount: response.count,
-    totalPages,
-    currentPage: page ? parseInt(page, 10) : 1,
+    meta: {
+      totalCount: response.count,
+      totalPages,
+      currentPage: page ? parseInt(page, 10) : 1,
+    },
   })
 })
 

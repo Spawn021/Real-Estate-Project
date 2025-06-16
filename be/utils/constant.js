@@ -193,17 +193,18 @@ const properties = Array.from([...Array(60).keys()]).map((i) => ({
     Array.from([...Array(faker.number.int({ min: 5, max: 7 })).keys()]).map(
       () =>
         `${faker.image.urlLoremFlickr({
-          category: 'realestate',
+          category: 'city',
           width: 640,
           height: 480,
         })}?random=${faker.string.numeric(30)}`,
     ),
   ),
   featureImage: faker.image.urlLoremFlickr({
-    category: 'realestate',
+    category: 'city',
     width: 640,
     height: 480,
   }),
+  address: faker.location.streetAddress({ useFullAddress: true }),
   postedBy: faker.helpers.arrayElement(agentUsers).id,
   bedRoom: faker.number.int({ min: 1, max: 5 }),
   bathRoom: faker.number.int({ min: 1, max: 5 }),

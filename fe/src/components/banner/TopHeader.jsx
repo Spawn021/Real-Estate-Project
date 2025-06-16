@@ -15,7 +15,7 @@ function TopHeader({ location }) {
 
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (!optionsBox.current.contains(e.target)) {
+      if (optionsBox.current && !optionsBox.current.contains(e.target)) {
         setIsShowMenu(false)
       } else {
         setIsShowMenu(true)

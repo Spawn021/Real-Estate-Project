@@ -9,6 +9,22 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Property.belongsTo(models.PropertyType, {
+        foreignKey: 'propertyTypeId',
+        as: 'propertyType',
+      })
+      Property.belongsTo(models.User, {
+        foreignKey: 'owner',
+        as: 'ownerUser',
+      })
+      Property.belongsTo(models.User, {
+        foreignKey: 'postedBy',
+        as: 'postedByUser',
+      })
+      Property.hasMany(models.PropertyFeature, {
+        foreignKey: 'propertyId',
+        as: 'features',
+      })
     }
   }
   Property.init(
@@ -38,6 +54,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       featureImage: DataTypes.STRING,
+      address: DataTypes.STRING,
       postedBy: DataTypes.UUID,
       bedRoom: DataTypes.INTEGER,
       bathRoom: DataTypes.INTEGER,
