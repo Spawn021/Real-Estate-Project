@@ -22,5 +22,6 @@ export { default as SelectLib } from './input/SelectLib'
 export { default as CardProperty } from './properties/CardProperty'
 
 export { default as AdminSidebar } from './sidebar/AdminSidebar'
+export { default as CustomerSidebar } from './sidebar/CustomerSidebar'
 
 export { default as Login } from './login/Login'

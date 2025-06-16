@@ -18,6 +18,7 @@ const InputFile = ({
   setValue,
 }) => {
   const rawImages = watch(id)
+
   const [images, setImages] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const handleUpload = async (files) => {

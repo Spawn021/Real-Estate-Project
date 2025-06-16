@@ -17,8 +17,6 @@ function TopHeader({ location }) {
     const handleClickOutside = (e) => {
       if (optionsBox.current && !optionsBox.current.contains(e.target)) {
         setIsShowMenu(false)
-      } else {
-        setIsShowMenu(true)
       }
     }
     document.addEventListener('click', handleClickOutside)
@@ -26,6 +24,7 @@ function TopHeader({ location }) {
       document.removeEventListener('click', handleClickOutside)
     }
   }, [])
+
   return (
     <div
       className={twMerge(

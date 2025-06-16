@@ -1,19 +1,12 @@
-import { Route, Routes } from 'react-router-dom'
-import { AboutUs, Home, OurAgents, Properties, PublicLayout } from './pages/public'
-import { path } from './utils/path'
+import { Outlet } from 'react-router-dom'
+
 import { Modal } from './components'
 import { useModalStore } from './store/useModalStore'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { useUserStore } from './store/useUserStore'
 import { useEffect } from 'react'
-import {
-  AdminLayout,
-  CreatePropertyType,
-  Dashboard,
-  ManagePropertyType,
-} from './pages/admin'
-import { Personal, UserLayout } from './pages/user'
+
 import { usePropertyStore } from './store/usePropertyStore'
 
 function App() {
@@ -29,24 +22,7 @@ function App() {
   return (
     <>
       {isShowModal && <Modal />}
-      <Routes>
-        <Route path={path.PUBLIC_LAYOUT} element={<PublicLayout />}>
-          <Route path={path.HOME} element={<Home />} />
-          <Route path={path.ABOUT_US} element={<AboutUs />} />
-          <Route path={path.OUR_AGENTS} element={<OurAgents />} />
-          <Route path={path.PROPERTIES} element={<Properties />} />
-        </Route>
-
-        <Route path={path.ADMIN_LAYOUT} element={<AdminLayout />}>
-          <Route path={path.ADMIN_DASHBOARD} element={<Dashboard />} />
-          <Route path={path.CREATE_PROPERTY_TYPE} element={<CreatePropertyType />} />
-          <Route path={path.MANAGE_PROPERTY_TYPE} element={<ManagePropertyType />} />
-        </Route>
-
-        <Route path={path.USER_LAYOUT} element={<UserLayout />}>
-          <Route path={path.PERSONAL} element={<Personal />} />
-        </Route>
-      </Routes>
+      <Outlet />
       <ToastContainer
         position="top-right"
         autoClose={5000}

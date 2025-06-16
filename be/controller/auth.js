@@ -14,7 +14,7 @@ const signup = asyncHandler(async (req, res) => {
   const userId = response[0].id
   if (userId) {
     const roleCode = ['ROLE7']
-    if (req.body.roleCode) roleCode.push(req.body.roleCode)
+    if (req.body.roleCode !== 'ROLE7') roleCode.push(req.body.roleCode)
     const roleCodeBulk = roleCode.map((code) => ({
       uid: userId,
       roleCode: code,

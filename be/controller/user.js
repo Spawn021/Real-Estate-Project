@@ -39,7 +39,34 @@ const getRoles = asyncHandler(async (req, res) => {
     roles: response,
   })
 })
+
+const updateProfile = asyncHandler(async (req, res) => {
+  const { uid } = req.user
+  const { phone } = req.body
+  if (phone) {
+    const phoneExists = await db.User.findOne({
+      where: { phone, id: { [db.Sequelize.Op.ne]: uid } },
+    })
+    if (phoneExists) {
+      return res.status(400).json({
+        success: false,
+        message: 'Phone number already exists',
+      })
+    }
+  }
+  const response = await db.User.update(req.body, {
+    where: { id: uid },
+  })
+
+  return res.status(200).json({
+    success: Boolean(response[0]),
+    message: Boolean(response[0])
+      ? 'Profile updated successfully'
+      : 'Profile update failed',
+  })
+})
 module.exports = {
   getCurrent,
   getRoles,
+  updateProfile,
 }

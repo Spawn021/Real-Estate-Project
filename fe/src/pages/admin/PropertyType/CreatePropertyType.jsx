@@ -19,6 +19,7 @@ const CreatePropertyType = () => {
   const handleGetImages = useCallback((images) => {
     setUploadedImages(images.map((img) => img.path))
   }, [])
+
   const onSubmit = async (data) => {
     const payload = {
       ...data,
@@ -77,6 +78,7 @@ const CreatePropertyType = () => {
           errors={errors}
           setValue={setValue}
           getImages={handleGetImages}
+          value={uploadedImages}
         />
       </form>
     </div>

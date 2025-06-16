@@ -3,6 +3,7 @@ import { MdDashboard } from 'react-icons/md'
 import { FaHouse } from 'react-icons/fa6'
 import { FaHouseChimneyMedical } from 'react-icons/fa6'
 import { BsHouseGearFill } from 'react-icons/bs'
+import { FaRegUserCircle } from 'react-icons/fa'
 
 export const navigations = [
   {
@@ -31,7 +32,7 @@ export const adminSidebar = [
   {
     id: 1,
     name: 'Dashboard',
-    path: `/${path.ADMIN_LAYOUT}/${path.DASHBOARD}`,
+    path: `/${path.ADMIN_LAYOUT}/${path.ADMIN_DASHBOARD}`,
     icon: <MdDashboard />,
     type: 'SINGLE',
   },
@@ -57,6 +58,16 @@ export const adminSidebar = [
         icon: <BsHouseGearFill />,
       },
     ],
+  },
+]
+
+export const customerSidebar = [
+  {
+    id: 1,
+    name: 'Personal Information',
+    path: `/${path.USER_LAYOUT}/${path.PERSONAL}`,
+    icon: <FaRegUserCircle />,
+    type: 'SINGLE',
   },
 ]
 
