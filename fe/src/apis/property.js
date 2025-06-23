@@ -6,3 +6,8 @@ export const apiGetProperties = (params) =>
     method: 'get',
     params,
   })
+export const apiGetPropertyById = (pid) =>
+  axios({
+    url: '/property/' + pid,
+    method: 'get',
+  })

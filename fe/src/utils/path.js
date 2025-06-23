@@ -4,6 +4,7 @@ export const path = {
   ABOUT_US: 'about-us',
   OUR_AGENTS: 'our-agents',
   PROPERTIES: 'properties',
+  PROPERTY_DETAIL_ID: 'properties/:pid',
 
   ADMIN_LAYOUT: 'admin',
   ADMIN_DASHBOARD: 'dashboard',

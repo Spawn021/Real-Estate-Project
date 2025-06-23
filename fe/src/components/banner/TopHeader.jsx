@@ -29,7 +29,7 @@ function TopHeader({ location }) {
     <div
       className={twMerge(
         clsx(
-          'h-[85px] text-white border-b border-main-400 w-full bg-transparent z-50 fixed px-[100px] py-[26px] flex items-center justify-between',
+          'h-[85px] text-white border-b border-main-400 w-full bg-transparent z-[10000] fixed px-[100px] py-[26px] flex items-center justify-between',
         ),
         location.pathname !== '/' && 'bg-main-700',
       )}

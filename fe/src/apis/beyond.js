@@ -8,3 +8,10 @@ export const apiUploadImage = (data) =>
     }/image/upload`,
     data,
   })
+export const apiGetLongtitudeAndLatitude = (address) =>
+  axios({
+    method: 'get',
+    url: `https://api.geoapify.com/v1/geocode/search?text=${address}&apiKey=${
+      import.meta.env.VITE_API_GEOAPIFY
+    }`,
+  })

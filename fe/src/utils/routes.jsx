@@ -1,6 +1,13 @@
 import App from '@/App'
 import { path } from './path'
-import { AboutUs, Home, OurAgents, Properties, PublicLayout } from '@/pages/public'
+import {
+  AboutUs,
+  Home,
+  OurAgents,
+  Properties,
+  PropertyDetail,
+  PublicLayout,
+} from '@/pages/public'
 import {
   AdminLayout,
   CreatePropertyType,
@@ -33,6 +40,10 @@ export const routes = [
           {
             path: path.PROPERTIES,
             element: <Properties />,
+          },
+          {
+            path: path.PROPERTY_DETAIL_ID,
+            element: <PropertyDetail />,
           },
         ],
       },

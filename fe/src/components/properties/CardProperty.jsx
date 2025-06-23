@@ -4,17 +4,21 @@ import { PiBathtub } from 'react-icons/pi'
 import { SlSizeFullscreen } from 'react-icons/sl'
 import { IoShareSocialOutline } from 'react-icons/io5'
 import { FaRegEye } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
+import { path } from '@/utils/path'
 
 const CardProperty = ({ properties }) => {
   return (
-    <div className="border rounded-md ">
+    <Link to={`/${path.PROPERTIES}/${properties.id}`} className="border rounded-md ">
       <img
         src={properties.featureImage}
         alt={properties.name}
         className="w-full h-[240px] object-cover rounded-t-md"
       />
       <div className="p-4 flex flex-col gap-2">
-        <h1 className="text-[18px] uppercase text-gray-700">{properties?.name}</h1>
+        <h1 className="text-[18px] uppercase text-gray-700 hover:underline">
+          {properties?.name}
+        </h1>
         <span className="text-main-500 text-sm font-semibold">
           {formatPrice(properties?.price)}
         </span>
@@ -57,7 +61,7 @@ const CardProperty = ({ properties }) => {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   )
 }
 

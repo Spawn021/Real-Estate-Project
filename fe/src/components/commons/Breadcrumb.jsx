@@ -2,7 +2,7 @@ import useBreadcrumbs from 'use-react-router-breadcrumbs'
 import { Link } from 'react-router-dom'
 import { path } from '@/utils/path'
 
-const Breadcrumb = () => {
+const Breadcrumb = ({ title }) => {
   const breadcrumbRoutes = [
     {
       path: '/',
@@ -11,6 +11,12 @@ const Breadcrumb = () => {
     {
       path: `/${path.PROPERTIES}`,
       breadcrumb: 'Properties',
+    },
+    {
+      path: `/${path.PROPERTIES}/:pid`,
+      breadcrumb: () => {
+        return title
+      },
     },
   ]
 

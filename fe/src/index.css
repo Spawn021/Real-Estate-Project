@@ -7,3 +7,36 @@ body {
   height: 100%;
   margin: 0;
 }
+.slick-slide > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.slick-slide > div > img {
+  width: 940px !important;
+}
+.slick-dots > li {
+  width: 120px !important;
+  height: 80px !important;
+}
+.slick-dots {
+  bottom: -120px !important;
+}
+.slick-active > img {
+  border: 2px solid orange !important;
+}
+.fullscreen-mode .slick-list .slick-slide > div > img {
+  width: 1150px !important;
+}
+@keyframes slide-progress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.animate-slide-progress {
+  animation: slide-progress 2s linear forwards;
+}

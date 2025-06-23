@@ -109,7 +109,51 @@ const getProperties = asyncHandler(async (req, res) => {
   })
 })
 
+const getPropertyById = asyncHandler(async (req, res) => {
+  const { pid } = req.params
+  if (!pid) {
+    return throwErrorWithStatus('Property ID is required', 400)
+  }
+  const cachedProperty = await redis.get(`property:${pid}`)
+  if (cachedProperty) {
+    const parsedProperty = JSON.parse(cachedProperty)
+    return res.status(200).json({
+      success: true,
+      message: 'Property fetched successfully',
+      property: parsedProperty,
+    })
+  }
+  const response = await db.Property.findByPk(pid, {
+    include: [
+      {
+        model: db.PropertyType,
+        as: 'propertyType',
+        attributes: ['name', 'image', 'description'],
+      },
+      {
+        model: db.User,
+        as: 'ownerUser',
+        attributes: ['avatar', 'name', 'phone', 'email'],
+      },
+      {
+        model: db.User,
+        as: 'postedByUser',
+        attributes: ['avatar', 'name', 'phone', 'email'],
+      },
+    ],
+  })
+  if (!response) {
+    return throwErrorWithStatus('Property not found', 404)
+  }
+  redis.set(`property:${pid}`, JSON.stringify(response))
+  return res.status(200).json({
+    success: true,
+    message: 'Property fetched successfully',
+    property: response,
+  })
+})
 module.exports = {
   createProperty,
   getProperties,
+  getPropertyById,
 }

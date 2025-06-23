@@ -20,8 +20,15 @@ export { default as InputSelect } from './input/InputSelect'
 export { default as SelectLib } from './input/SelectLib'
 
 export { default as CardProperty } from './properties/CardProperty'
+export { default as TopImage } from './properties/TopImage'
+export { default as ImageDetail } from './properties/ImageDetail'
+export { default as RelatedProperties } from './properties/RelatedProperties'
 
 export { default as AdminSidebar } from './sidebar/AdminSidebar'
 export { default as CustomerSidebar } from './sidebar/CustomerSidebar'
 
+export { default as BoxInfo } from './boxs/BoxInfo'
+
 export { default as Login } from './login/Login'
+
+export { default as Map } from './maps/Map'

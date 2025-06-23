@@ -15,7 +15,7 @@ const Navigation = ({ location }) => {
     <div
       className={twMerge(
         clsx(
-          'h-[85px] w-full bg-transparent z-10 fixed top-[85px] px-[100px] py-[26px] flex items-center justify-between ',
+          'h-[85px] w-full bg-transparent z-[9999] fixed top-[85px] px-[100px] py-[26px] flex items-center justify-between ',
           location.pathname !== '/' && 'bg-white border-b border-gray-200 shadow-md',
         ),
       )}
